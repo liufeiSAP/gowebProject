@@ -56,21 +56,19 @@ func RegisterDB() {
 	user := beego.AppConfig.String("db::userName")
 	pwd := beego.AppConfig.String("db::password")
 
+	fmt.Print(beego.AppConfig.String("db::envRar"))
+
 	dbcon := user + ":" + pwd + "@tcp(" + host + ":" + port + ")/" + dbname + "?charset=utf8"
 	fmt.Print(dbcon)
 	orm.RegisterDataBase("default", "mysql", dbcon /*"root:root@tcp(localhost:3306)/test?charset=utf8"*/) //密码为空格式
 }
 
-func CreateUsers() {
-	users := []User{
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
-		User{Name: "adadmin1", Email: "14199@111.com", Age: 12},
+func CreateUsers(users []User) {
+
+	for i := 0; i < len(users); i++ {
+		fmt.Println(users[i])
 	}
+
 	o := orm.NewOrm()
 	if successNums, err := o.InsertMulti(len(users), users); err != nil {
 		fmt.Println("insert fail.....")
@@ -146,8 +144,8 @@ func LimitoffsetUser() {
 }
 
 //del user
-func DelUser() {
-	num, err := orm.NewOrm().QueryTable("t_user").Filter("Id", "5").Delete()
+func DelUser(id int) {
+	num, err := orm.NewOrm().QueryTable("t_user").Filter("Id", id).Delete()
 	fmt.Printf("Affected Num: %s, %s", num, err)
 }
 

@@ -11,7 +11,7 @@ type MainController struct {
 }
 
 func (c *MainController) Get() {
-	models.CreateUsers()
+	// models.CreateUsers()
 	models.ListUsers()
 	models.CountUser()
 	models.GetUser()
